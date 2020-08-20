@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { Link } from "react-router-dom";
 // bootstrap
 import { Row, Col, Form, Button } from "react-bootstrap";
 
@@ -25,7 +25,8 @@ function Login(props) {
   const [errors, setErrors] = useState({});
 
   const [login, { loading }] = useMutation(LOGIN_USER, {
-    update(_, __) {
+    update(_, result) {
+      localStorage.setItem("jwtToken", result.data.login.token);
       props.history.push("/");
     },
     onError(err) {
@@ -42,10 +43,10 @@ function Login(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
     login({ variables });
-    setVariables({
-      username: "",
-      password: "",
-    });
+    // setVariables({
+    //   username: "",
+    //   password: "",
+    // });
   };
 
   return (
@@ -82,6 +83,10 @@ function Login(props) {
               <Button variant="primary" type="submit" disabled={loading}>
                 {loading ? "Loading" : "Login"}
               </Button>
+              <br />
+              <small>
+                Don't have an account? <Link to="/register">Register</Link>
+              </small>
             </div>
           </Form>
         </Col>

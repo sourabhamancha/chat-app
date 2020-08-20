@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { Link } from "react-router-dom";
 // bootstrap
 import { Row, Col, Form, Button } from "react-bootstrap";
 
@@ -42,12 +42,10 @@ function Register(prop) {
 
   const [registerUser, { loading }] = useMutation(REGISTER_USER, {
     update(_, __) {
-      // console.log(res);
-      prop.history.push("/");
+      prop.history.push("/login");
     },
     onError(err) {
       setErrors(err.graphQLErrors[0].extensions.errors);
-      console.log(errors);
     },
   });
 
@@ -61,12 +59,12 @@ function Register(prop) {
     e.preventDefault();
     variables.imageUrl = "";
     registerUser({ variables });
-    setVariables({
-      email: "",
-      username: "",
-      password: "",
-      confirmPassword: "",
-    });
+    // setVariables({
+    //   email: "",
+    //   username: "",
+    //   password: "",
+    //   confirmPassword: "",
+    // });
   };
 
   return (
@@ -127,6 +125,10 @@ function Register(prop) {
               <Button variant="primary" type="submit" disabled={loading}>
                 {loading ? "Loading" : "Register"}
               </Button>
+              <br />
+              <small>
+                Already have an account? <Link to="/login">Login</Link>
+              </small>
             </div>
           </Form>
         </Col>
