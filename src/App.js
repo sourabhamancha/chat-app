@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.scss";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Switch } from "react-router-dom";
 import { AuthProvider } from "./context/auth";
 // bootstrap
 import { Container } from "react-bootstrap";
@@ -9,16 +9,16 @@ import { Container } from "react-bootstrap";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
-
+import ProtectedRoute from "./util/ProtectedRoute";
 function App() {
   return (
     <AuthProvider>
       <Router>
         <Container>
           <Switch>
-            <Route exact path="/" component={Home} />
-            <Route exact path="/register" component={Register} />
-            <Route exact path="/login" component={Login} />
+            <ProtectedRoute exact path="/" component={Home} authenticated />
+            <ProtectedRoute exact path="/register" component={Register} guest />
+            <ProtectedRoute exact path="/login" component={Login} guest />
           </Switch>
         </Container>
       </Router>
