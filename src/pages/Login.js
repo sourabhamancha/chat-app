@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useAuthDispatch } from "../context/auth";
 // bootstrap
 import { Row, Col, Form, Button } from "react-bootstrap";
 
@@ -23,10 +24,14 @@ function Login(props) {
   });
 
   const [errors, setErrors] = useState({});
+  const dispatch = useAuthDispatch();
 
   const [login, { loading }] = useMutation(LOGIN_USER, {
     update(_, result) {
-      localStorage.setItem("jwtToken", result.data.login.token);
+      dispatch({
+        type: "LOGIN",
+        payload: result.data.login,
+      });
       props.history.push("/");
     },
     onError(err) {
