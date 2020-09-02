@@ -1,4 +1,5 @@
 import React from "react";
+import { useMessageDispatch, useMessageState } from "../../context/message";
 // graphql
 import { gql, useQuery } from "@apollo/client";
 // bootstrap
@@ -21,15 +22,24 @@ const GET_USERS = gql`
 `;
 
 function Users({ setSelectedUser }) {
-  const { loading, data } = useQuery(GET_USERS);
+  const dispatch = useMessageDispatch();
+  const { users } = useMessageState();
+  const { loading } = useQuery(GET_USERS, {
+    onCompleted: (result) =>
+      dispatch({
+        type: "SET_USERS",
+        payload: result.getUsers,
+      }),
+    onError: (err) => console.log(err),
+  });
 
   const usersMarkup = () => {
-    if (!data || loading) {
+    if (!users || loading) {
       return <p>Loading...</p>;
-    } else if (data.getUsers.length < 0) {
+    } else if (users.length < 0) {
       return <p>No users</p>;
-    } else if (data.getUsers.length > 0) {
-      return data.getUsers.map((user) => (
+    } else if (users.length > 0) {
+      return users.map((user) => (
         <div
           className="d-flex p-3"
           key={user.username}
