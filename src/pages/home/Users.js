@@ -1,4 +1,5 @@
 import React from "react";
+import classNames from "classnames";
 import { useMessageDispatch, useMessageState } from "../../context/message";
 // graphql
 import { gql, useQuery } from "@apollo/client";
@@ -21,7 +22,7 @@ const GET_USERS = gql`
   }
 `;
 
-function Users({ setSelectedUser }) {
+function Users({ setSelectedUser, selectedUser }) {
   const dispatch = useMessageDispatch();
   const { users } = useMessageState();
   const { loading } = useQuery(GET_USERS, {
@@ -39,28 +40,34 @@ function Users({ setSelectedUser }) {
     } else if (users.length < 0) {
       return <p>No users</p>;
     } else if (users.length > 0) {
-      return users.map((user) => (
-        <div
-          className="d-flex p-3"
-          key={user.username}
-          onClick={() => setSelectedUser(user.username)}
-        >
-          <Image
-            src={user.imageUrl}
-            roundedCircle
-            className="mr-2"
-            style={{ width: 50, height: 50, objectFit: "cover" }}
-          />
-          <div className="text-light">
-            <p className="m-0">{user.username}</p>
-            <p className="font-weight-light">
-              {user.latestMessage
-                ? user.latestMessage.content
-                : "You are now connected!"}
-            </p>
+      return users.map((user) => {
+        const selected = selectedUser === user.username;
+        return (
+          <div
+            role="button"
+            className={classNames("user-div d-flex p-3", {
+              "bg-secondary": selected,
+            })}
+            key={user.username}
+            onClick={() => setSelectedUser(user.username)}
+          >
+            <Image
+              src={user.imageUrl}
+              roundedCircle
+              className="mr-2"
+              style={{ width: 50, height: 50, objectFit: "cover" }}
+            />
+            <div className="text-light">
+              <p className="m-0">{user.username}</p>
+              <p className="font-weight-light">
+                {user.latestMessage
+                  ? user.latestMessage.content
+                  : "You are now connected!"}
+              </p>
+            </div>
           </div>
-        </div>
-      ));
+        );
+      });
     }
   };
   return (

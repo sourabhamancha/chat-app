@@ -56,7 +56,7 @@ function Home({ history }) {
         </Button>
       </Row>
       <Row>
-        <Users setSelectedUser={setSelectedUser} />
+        <Users setSelectedUser={setSelectedUser} selectedUser={selectedUser} />
         <Col xs={8}>
           {messagesData && messagesData.getMessages.length > 0 ? (
             messagesData.getMessages.map((message) => (
