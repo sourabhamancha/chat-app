@@ -3,3 +3,14 @@
 .user-div:hover {
   background-color: darkgray;
 }
+
+.messages-box {
+  height: 500px;
+  overflow-y: scroll;
+
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

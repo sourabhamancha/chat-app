@@ -13,7 +13,8 @@ function Home({ history }) {
     dispatch({
       type: "LOGOUT",
     });
-    history.push("/login");
+    // history.push("/login");
+    window.location.href = "/login";
   };
 
   return (
