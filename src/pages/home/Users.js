@@ -45,9 +45,12 @@ function Users() {
       return (
         <div
           role="button"
-          className={classNames("user-div d-flex p-3", {
-            "bg-secondary": selected,
-          })}
+          className={classNames(
+            "user-div d-flex justify-content-center justify-content-md-start p-3",
+            {
+              "bg-secondary": selected,
+            }
+          )}
           key={user.username}
           onClick={() =>
             dispatch({ type: "SET_SELECTED_USER", payload: user.username })
@@ -55,11 +58,11 @@ function Users() {
         >
           <Image
             src={user.imageUrl}
-            roundedCircle
-            className="mr-2"
-            style={{ width: 50, height: 50, objectFit: "cover" }}
+            // roundedCircle
+            className="user-image"
+            // style={{ width: 50, height: 50, objectFit: "cover" }}
           />
-          <div className="text-light">
+          <div className="d-none d-md-block text-light ml-2">
             <p className="m-0">{user.username}</p>
             <p className="font-weight-light">
               {user.latestMessage
@@ -73,7 +76,7 @@ function Users() {
   }
 
   return (
-    <Col xs={4} className="p-0 bg-primary">
+    <Col xs={2} md={4} className="p-0 bg-primary">
       {usersMarkup}
     </Col>
   );

@@ -66,11 +66,9 @@ function Messages() {
     selectedChatMarkup = <p>You are now connected! Send your first message</p>;
   }
   return (
-    <div>
-      <Col xs={12} className="messages-box d-flex flex-column-reverse">
-        {selectedChatMarkup}
-      </Col>
-    </div>
+    <Col xs={10} md={8} className="messages-box d-flex flex-column-reverse">
+      {selectedChatMarkup}
+    </Col>
   );
 }
 
