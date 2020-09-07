@@ -57,7 +57,10 @@ function Users() {
           }
         >
           <Image
-            src={user.imageUrl}
+            src={
+              user.imageUrl ||
+              "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"
+            }
             // roundedCircle
             className="user-image"
             // style={{ width: 50, height: 50, objectFit: "cover" }}

@@ -47,7 +47,7 @@ function Messages() {
         type: "ADD_MESSAGE",
         payload: {
           username: selectedUser.username,
-          message: data.sendMessage.content,
+          message: data.sendMessage,
         },
       }),
     onError: (err) => console.log(err),
@@ -73,13 +73,14 @@ function Messages() {
 
   const submitMessage = (e) => {
     e.preventDefault();
-    if (content === "") return;
+    if (content.trim() === "" || !selectedUser) return;
     sendMessage({
       variables: {
         to: selectedUser.username,
         content,
       },
     });
+    setContent("");
   };
 
   let selectedChatMarkup;
@@ -108,7 +109,7 @@ function Messages() {
       </div>
       <div>
         <Form onSubmit={submitMessage}>
-          <Form.Group>
+          <Form.Group className="d-flex align-items-center">
             <Form.Control
               type="text"
               className="rounded-pill"
@@ -116,6 +117,11 @@ function Messages() {
               value={content}
               onChange={(e) => setContent(e.target.value)}
             />
+            <i
+              className="fas fa-paper-plane fa-2x text-primary ml-1"
+              onClick={submitMessage}
+              role="button"
+            ></i>
           </Form.Group>
         </Form>
       </div>

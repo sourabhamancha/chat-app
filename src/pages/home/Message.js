@@ -7,7 +7,7 @@ import { OverlayTrigger, Tooltip } from "react-bootstrap";
 function Message({ message }) {
   const { user } = useAuthState();
   const sent = message.from === user.username;
-  const recieved = !sent;
+  const recieved = message.from !== user.username;
   return (
     <OverlayTrigger
       placement={
@@ -28,8 +28,8 @@ function Message({ message }) {
       >
         <div
           className={classNames("pt-2 px-3 rounded-pill", {
-            "bg-primary": sent,
             "bg-secondary": recieved,
+            "bg-primary": sent,
           })}
         >
           <p className="text-white" key={message.uuid}>

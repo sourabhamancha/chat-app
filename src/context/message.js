@@ -38,6 +38,7 @@ const messageReducer = (state, action) => {
       let updatedUser = {
         ...usersCopy[userIndex],
         messages: [message, ...usersCopy[userIndex].messages],
+        latestMessage: message,
       };
       usersCopy[userIndex] = updatedUser;
       return {
