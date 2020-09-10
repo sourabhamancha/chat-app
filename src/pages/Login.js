@@ -32,7 +32,7 @@ function Login(props) {
         type: "LOGIN",
         payload: result.data.login,
       });
-      props.history.push("/");
+      window.location.href = "/";
     },
     onError(err) {
       setErrors(err.graphQLErrors[0].extensions.errors);
