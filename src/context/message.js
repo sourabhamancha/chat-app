@@ -4,7 +4,7 @@ const MessageStateContext = createContext();
 const MessageDispatchContext = createContext();
 
 const messageReducer = (state, action) => {
-  const { username, message, messages } = action.payload;
+  const { username, message, messages, reaction } = action.payload;
   let usersCopy, userIndex;
   switch (action.type) {
     case "SET_USERS":
@@ -35,6 +35,7 @@ const messageReducer = (state, action) => {
     case "ADD_MESSAGE":
       usersCopy = [...state.users];
       userIndex = usersCopy.findIndex((u) => u.username === username);
+      message.reactions = [];
       let updatedUser = {
         ...usersCopy[userIndex],
         messages: usersCopy[userIndex].messages
@@ -43,6 +44,38 @@ const messageReducer = (state, action) => {
         latestMessage: message,
       };
       usersCopy[userIndex] = updatedUser;
+      return {
+        ...state,
+        users: usersCopy,
+      };
+    case "ADD_REACTION":
+      usersCopy = [...state.users];
+      userIndex = usersCopy.findIndex((u) => u.username === username);
+      let userCopy = { ...usersCopy[userIndex] };
+      const messageIndex = userCopy.messages?.findIndex(
+        (m) => m.uuid === reaction.message.uuid
+      );
+      if (messageIndex > -1) {
+        let messagesCopy = [...userCopy.messages];
+        let reactionsCopy = [...messagesCopy[messageIndex].reactions];
+        const reactionIndex = reactionsCopy.findIndex(
+          (r) => r.uuid === reaction.uuid
+        );
+        if (reactionIndex > -1) {
+          reactionsCopy[reactionIndex] = reaction;
+        } else {
+          reactionsCopy = [...reactionsCopy, reaction];
+        }
+        messagesCopy[messageIndex] = {
+          ...messagesCopy[messageIndex],
+          reactions: reactionsCopy,
+        };
+        userCopy = {
+          ...userCopy,
+          messages: messagesCopy,
+        };
+        usersCopy[userIndex] = userCopy;
+      }
       return {
         ...state,
         users: usersCopy,
