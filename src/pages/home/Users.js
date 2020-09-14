@@ -1,10 +1,11 @@
 import React from "react";
 import classNames from "classnames";
 import { useMessageDispatch, useMessageState } from "../../context/message";
+import { useAuthDispatch } from "../../context/auth";
 // graphql
 import { gql, useQuery } from "@apollo/client";
 // bootstrap
-import { Col, Image } from "react-bootstrap";
+import { Col, Image, Button } from "react-bootstrap";
 
 const GET_USERS = gql`
   query getUsers {
@@ -23,6 +24,7 @@ const GET_USERS = gql`
 `;
 
 function Users() {
+  const authDispatch = useAuthDispatch();
   const dispatch = useMessageDispatch();
   const { users } = useMessageState();
   const selectedUser = users?.find((u) => u.selected === true)?.username;
@@ -78,8 +80,19 @@ function Users() {
     });
   }
 
+  const handleLogout = () => {
+    authDispatch({
+      type: "LOGOUT",
+    });
+    // history.push("/login");
+    window.location.href = "/login";
+  };
+
   return (
     <Col xs={2} md={4} className="p-0 bg-primary">
+      <div className="d-flex justify-content-center">
+        <Button onClick={handleLogout}>Logout</Button>
+      </div>
       {usersMarkup}
     </Col>
   );

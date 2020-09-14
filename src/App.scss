@@ -1,13 +1,19 @@
 @import "~bootstrap/scss/bootstrap";
 
+.user-div {
+  overflow-y: scroll;
+  scrollbar-width: none;
+}
+
 .user-div:hover {
   background-color: darkgray;
 }
-
+.messages-container {
+  background-color: #ffffff;
+}
 .messages-box {
-  height: 500px;
+  height: 90vh;
   overflow-y: scroll;
-
   scrollbar-width: none;
 
   &::-webkit-scrollbar {

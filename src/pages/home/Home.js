@@ -1,7 +1,6 @@
 import React, { Fragment, useEffect } from "react";
-import { Row, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import { useAuthDispatch, useAuthState } from "../../context/auth";
+import { Row } from "react-bootstrap";
+import { useAuthState } from "../../context/auth";
 import { useMessageDispatch } from "../../context/message";
 import { gql, useSubscription } from "@apollo/client";
 // components
@@ -21,7 +20,6 @@ const NEW_MESSAGE = gql`
 `;
 
 function Home({ history }) {
-  const dispatch = useAuthDispatch();
   const messageDispatch = useMessageDispatch();
   const { user } = useAuthState();
   const { data: messageData, error: messageError } = useSubscription(
@@ -44,17 +42,9 @@ function Home({ history }) {
     }
   }, [messageError, messageData]);
 
-  const handleLogout = () => {
-    dispatch({
-      type: "LOGOUT",
-    });
-    // history.push("/login");
-    window.location.href = "/login";
-  };
-
   return (
     <Fragment>
-      <Row className="justify-content-around">
+      {/* <Row className="justify-content-around">
         <Link to="/login">
           <Button variant="link">Login</Button>
         </Link>
@@ -64,8 +54,8 @@ function Home({ history }) {
         <Button variant="link" onClick={handleLogout}>
           Logout
         </Button>
-      </Row>
-      <Row>
+      </Row> */}
+      <Row className="mt-2 border rounded">
         <Users />
         <Messages />
       </Row>
