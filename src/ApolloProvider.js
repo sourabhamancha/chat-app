@@ -13,7 +13,7 @@ import { getMainDefinition } from "@apollo/client/utilities";
 import App from "./App";
 
 let httpLink = new HttpLink({
-  uri: "/graphql/",
+  uri: "http://localhost:4000",
 });
 
 const authLink = new ApolloLink((operation, forward) => {
@@ -33,10 +33,8 @@ const authLink = new ApolloLink((operation, forward) => {
 
 httpLink = authLink.concat(httpLink);
 
-const host = window.location.host;
-
 const wsLink = new WebSocketLink({
-  uri: `ws://${host}/graphql/`,
+  uri: `ws://localhost:4000/graphql`,
   options: {
     reconnect: true,
     connectionParams: {
