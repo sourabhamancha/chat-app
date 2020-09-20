@@ -36,6 +36,7 @@ function Register(prop) {
     username: "",
     password: "",
     confirmPassword: "",
+    imageUrl: "",
   });
 
   const [errors, setErrors] = useState({});
@@ -57,7 +58,6 @@ function Register(prop) {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    variables.imageUrl = "";
     registerUser({ variables });
     // setVariables({
     //   email: "",
@@ -119,6 +119,18 @@ function Register(prop) {
                 value={variables.confirmPassword}
                 onChange={handleChange}
                 className={errors.confirmPassword && "is-invalid"}
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label className={errors.imageUrl && "text-danger"}>
+                {errors.imageUrl ?? "Image URL"}
+              </Form.Label>
+              <Form.Control
+                type="text"
+                name="imageUrl"
+                value={variables.imageUrl}
+                onChange={handleChange}
+                className={errors.imageUrl && "is-invalid"}
               />
             </Form.Group>
             <div className="text-center">
